@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Providers from "@/app/Providers";
 import { newTheme } from "@/app/theme";
-import AppHeader from "@/app/AppHeader";
-import AppFooter from "@/app/AppFooter";
+import KKHeader from "@/app/_components/KKHeader";
+import KKFooter from "@/app/_components/KKFooter";
+import KKNavigation from "@/app/_components/KKNavigation";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,9 +20,35 @@ const RootLayout = ({
     <html lang="ja">
       <body>
         <Providers themes={[newTheme]}>
-          <AppHeader />
-          <main>{children}</main>
-          <AppFooter />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              height: "100vh",
+            }}
+          >
+            <KKHeader />
+            <div
+              style={{
+                display: "flex",
+                height: "calc(100vh - var(--uikit-header-height))",
+              }}
+            >
+              <KKNavigation />
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "100%",
+                }}
+              >
+                <main style={{ flexGrow: 1, overflowY: "auto" }}>
+                  <div>{children}</div>
+                </main>
+                <KKFooter />
+              </div>
+            </div>
+          </div>
         </Providers>
       </body>
     </html>
