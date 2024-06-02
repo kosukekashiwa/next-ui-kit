@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { usePcDrawerOpenState } from "@/app/_hooks";
 import { pcDrawerOpenState } from "@/app/_state/pcDrawerState";
 import {
@@ -7,7 +8,7 @@ import {
   HvHeader,
   HvHeaderBrand,
 } from "@hitachivantara/uikit-react-core";
-import { Fine, Menu, Backwards } from "@hitachivantara/uikit-react-icons";
+import { Menu, Backwards } from "@hitachivantara/uikit-react-icons";
 import { useSetRecoilState } from "recoil";
 
 const KKHeader = () => {
@@ -31,7 +32,13 @@ const KKHeader = () => {
                 <Menu iconSize="S" />
               )}
             </HvButton>
-            <Fine />
+            <Image
+              src="/next.svg"
+              alt="Next.js Logo"
+              width={100}
+              height={40}
+              priority
+            />
           </>
         }
         name={"Lumada App"}
