@@ -1,11 +1,11 @@
-import { pcDrawerOpenState } from "@/app/_state/pcDrawerState";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
-export const useChangePcDrawerOpenState = (): void => {
-  const setPcDrawerOpen = useSetRecoilState(pcDrawerOpenState);
-  setPcDrawerOpen((prev) => !prev);
-};
+/**
+ * 画面サイズがPCかどうかを返す
+ * @returns isPcSize: 画面幅960以上でtrue
+ */
+export const useSize = () => {
+  const isPcSize = useMediaQuery("(min-width:960px)");
 
-export const usePcDrawerOpenState = (): boolean => {
-  return useRecoilValue(pcDrawerOpenState);
+  return { isPcSize };
 };

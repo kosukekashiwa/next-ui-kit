@@ -9,11 +9,23 @@ import {
 } from "@hitachivantara/uikit-react-core";
 import { Menu, Backwards } from "@hitachivantara/uikit-react-icons";
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useSize } from "@/app/_hooks";
+import { useEffect } from "react";
 
 const KKHeader = () => {
   // TODO: wrap the Recoil　function
   const pcDrawerOpen = useRecoilValue(pcDrawerOpenState);
   const setPcDrawerOpen = useSetRecoilState(pcDrawerOpenState);
+
+  const { isPcSize } = useSize();
+
+  useEffect(() => {
+    // PC Drawerが開いている状態から、サイズが[PC->Tablet]になったとき、PcDrawerを閉じる
+    // Drawerを閉じている状態で、[Tablet->PC]になってもメニューは開かない
+    if (!isPcSize && pcDrawerOpen) {
+      setPcDrawerOpen(false);
+    }
+  }, [isPcSize, pcDrawerOpen, setPcDrawerOpen]);
 
   return (
     <HvHeader position="static">
