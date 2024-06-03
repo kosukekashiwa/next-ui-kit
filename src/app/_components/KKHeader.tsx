@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { usePcDrawerOpenState } from "@/app/_hooks";
 import { pcDrawerOpenState } from "@/app/_state/pcDrawerState";
 import {
   HvButton,
@@ -9,10 +8,11 @@ import {
   HvHeaderBrand,
 } from "@hitachivantara/uikit-react-core";
 import { Menu, Backwards } from "@hitachivantara/uikit-react-icons";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 const KKHeader = () => {
-  const pcDrawerOpen = usePcDrawerOpenState();
+  // TODO: wrap the Recoil　function
+  const pcDrawerOpen = useRecoilValue(pcDrawerOpenState);
   const setPcDrawerOpen = useSetRecoilState(pcDrawerOpenState);
 
   return (

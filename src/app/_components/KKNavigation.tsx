@@ -1,14 +1,16 @@
 "use client";
 
-import { usePcDrawerOpenState } from "@/app/_hooks";
+import { pcDrawerOpenState } from "@/app/_state/pcDrawerState";
 import styled from "@emotion/styled";
 import {
   HvVerticalNavigation,
   HvVerticalNavigationTree,
 } from "@hitachivantara/uikit-react-core";
+import { useRecoilValue } from "recoil";
 
 const KKNavigation: React.FC = () => {
-  const pcDrawerOpen = usePcDrawerOpenState();
+  // TODO: wrap the Recoil　function
+  const pcDrawerOpen = useRecoilValue(pcDrawerOpenState);
 
   return (
     <KKPCDrawer open={pcDrawerOpen}>
