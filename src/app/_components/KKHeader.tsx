@@ -10,7 +10,7 @@ import {
 import { Menu, Backwards } from "@hitachivantara/uikit-react-icons";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useSize } from "@/app/_hooks";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 
 const KKHeader = () => {
   // TODO: wrap the Recoil　function
@@ -27,13 +27,19 @@ const KKHeader = () => {
     }
   }, [isPcSize, pcDrawerOpen, setPcDrawerOpen]);
 
+  const handleMenuButtonClick = useCallback(() => {
+    if (isPcSize) {
+      setPcDrawerOpen((prev) => !prev);
+    }
+  }, [isPcSize, setPcDrawerOpen]);
+
   return (
     <HvHeader position="static">
       <HvHeaderBrand
         logo={
           <>
             <HvButton
-              onClick={() => setPcDrawerOpen((prev) => !prev)}
+              onClick={handleMenuButtonClick}
               aria-label="Menu"
               icon
               variant="primaryGhost"
