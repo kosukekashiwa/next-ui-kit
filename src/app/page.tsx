@@ -3,11 +3,11 @@ import { NextPage } from "next";
 const Home: NextPage = () => {
   return (
     <div>
-      <div>Sample</div>
+      <div>Start</div>
       <div style={{ border: "1px solid red", height: 1200 }}>
-        Sample Area A B C D E F G H I J K L M O P
+        Menu breakpoint is 960px.
       </div>
-      <div>Sample</div>
+      <div>End</div>
     </div>
   );
 };

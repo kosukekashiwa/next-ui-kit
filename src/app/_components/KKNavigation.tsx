@@ -1,41 +1,63 @@
 "use client";
 
+import { mobileDrawerOpenState } from "@/app/_state/mobileDrawerOpenState";
 import { pcDrawerOpenState } from "@/app/_state/pcDrawerState";
 import styled from "@emotion/styled";
 import {
+  HvDrawer,
   HvVerticalNavigation,
   HvVerticalNavigationTree,
 } from "@hitachivantara/uikit-react-core";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 const KKNavigation: React.FC = () => {
   // TODO: wrap the Recoil　function
   const pcDrawerOpen = useRecoilValue(pcDrawerOpenState);
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useRecoilState(
+    mobileDrawerOpenState
+  );
 
   return (
-    <KKPCDrawer open={pcDrawerOpen}>
-      <HvVerticalNavigation>
-        <HvVerticalNavigationTree
-          aria-label="Vertical Navigation"
-          collapsible
-          data={[
-            {
-              href: "/overview/model-effectiveness",
-              id: "1-1",
-              label: "Model Effectiveness 1",
-            },
-            {
-              href: "/overview/trend-analysis",
-              id: "1-2",
-              label: "Trend Analysis 1-2",
-            },
-          ]}
-          defaultExpanded
-          onChange={function _a() {}}
-          selected="1-1"
-        />
-      </HvVerticalNavigation>
-    </KKPCDrawer>
+    <>
+      <KKPCDrawer open={pcDrawerOpen}>
+        <Menu />
+      </KKPCDrawer>
+      <HvDrawer
+        open={mobileDrawerOpen}
+        anchor="left"
+        onClose={(): void => {
+          setMobileDrawerOpen((prev) => !prev);
+        }}
+      >
+        <Menu />
+      </HvDrawer>
+    </>
+  );
+};
+
+const Menu: React.FC = () => {
+  return (
+    <HvVerticalNavigation>
+      <HvVerticalNavigationTree
+        aria-label="Vertical Navigation"
+        collapsible
+        data={[
+          {
+            href: "/overview/model-effectiveness",
+            id: "1-1",
+            label: "Model Effectiveness 1",
+          },
+          {
+            href: "/overview/trend-analysis",
+            id: "1-2",
+            label: "Trend Analysis 1-2",
+          },
+        ]}
+        defaultExpanded
+        onChange={function _a() {}}
+        selected="1-1"
+      />
+    </HvVerticalNavigation>
   );
 };
 

@@ -8,14 +8,18 @@ import {
   HvHeaderBrand,
 } from "@hitachivantara/uikit-react-core";
 import { Menu, Backwards } from "@hitachivantara/uikit-react-icons";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { useSize } from "@/app/_hooks";
 import { useCallback, useEffect } from "react";
+import { mobileDrawerOpenState } from "@/app/_state/mobileDrawerOpenState";
 
 const KKHeader = () => {
   // TODO: wrap the Recoil　function
   const pcDrawerOpen = useRecoilValue(pcDrawerOpenState);
   const setPcDrawerOpen = useSetRecoilState(pcDrawerOpenState);
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useRecoilState(
+    mobileDrawerOpenState
+  );
 
   const { isPcSize } = useSize();
 
@@ -25,13 +29,27 @@ const KKHeader = () => {
     if (!isPcSize && pcDrawerOpen) {
       setPcDrawerOpen(false);
     }
-  }, [isPcSize, pcDrawerOpen, setPcDrawerOpen]);
+    // Mobile Drawerが開いている状態から、サイズが[Tablet->PC]になったとき、PcDrawerを閉じる
+    // Drawerを閉じている状態で、[PC->Tablet]になってもメニューは開かない
+    if (isPcSize && mobileDrawerOpen) {
+      setMobileDrawerOpen(false);
+    }
+  }, [
+    isPcSize,
+    mobileDrawerOpen,
+    pcDrawerOpen,
+    setMobileDrawerOpen,
+    setPcDrawerOpen,
+  ]);
 
   const handleMenuButtonClick = useCallback(() => {
     if (isPcSize) {
       setPcDrawerOpen((prev) => !prev);
     }
-  }, [isPcSize, setPcDrawerOpen]);
+    if (!isPcSize) {
+      setMobileDrawerOpen((prev) => !prev);
+    }
+  }, [isPcSize, setMobileDrawerOpen, setPcDrawerOpen]);
 
   return (
     <HvHeader position="static">
